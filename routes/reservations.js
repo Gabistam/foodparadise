@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Reservation = require('../models/reservations'); // Import du modèle Reservation
+const Reservation = require('../models/Reservation'); // Import du modèle Reservation
 
 // Récupérer toutes les réservations
 router.get('/', async (req, res) => {

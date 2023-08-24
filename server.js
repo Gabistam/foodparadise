@@ -19,6 +19,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Utilisation de Twig pour les vues
+app.set('view engine', 'twig');
+app.set('views', __dirname + '/views');
+
 // Routes
 app.get('/', (req, res) => {
     res.send('Bienvenue sur votre API de réservation pour restaurant!');

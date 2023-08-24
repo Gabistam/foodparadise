@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Menu = require('../models/menus'); // Import du modèle Menu
+const Menu = require('../models/Menu'); // Import du modèle Menu
 
 // Récupérer tous les menus
 router.get('/', async (req, res) => {

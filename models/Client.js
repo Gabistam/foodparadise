@@ -7,11 +7,11 @@ const Client = sequelize.define('Client', {
         autoIncrement: true,
         primaryKey: true
     },
-    Nom: {
+    Lastname: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Prénom: {
+    Firstname: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -20,7 +20,7 @@ const Client = sequelize.define('Client', {
         allowNull: false,
         unique: true
     },
-    Téléphone: {
+    Phone: {
         type: DataTypes.STRING,
         unique: true
     }
