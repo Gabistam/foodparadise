@@ -8,7 +8,7 @@ app.use(express.json()); // Pour parser le JSON
 
 // Routes (Ajout de plus de routes plus tard)
 app.get('/', (req, res) => {
-    res.send('Bienvenue sur RestoNode!');
+    res.send('Bienvenue sur FoodParadise!');
 });
 
 // Connexion à la base de données et démarrage du serveur
