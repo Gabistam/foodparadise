@@ -23,3 +23,11 @@ sequelize.sync() // Synchronise les modèles avec la base de données
     .catch(err => {
         console.error('Unable to connect to the database:', err);
     });
+
+sequelize.authenticate()
+    .then(() => {
+        console.log('Connection to the database has been established successfully.');
+    })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err);
+    });
