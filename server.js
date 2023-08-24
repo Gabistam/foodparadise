@@ -6,6 +6,11 @@ const app = express();
 // Middlewares
 app.use(express.json()); // Pour parser le JSON
 
+// Utilisation de Twig pour les vues
+app.set('view engine', 'twig');
+app.set('views', path.join(__dirname, 'views'));
+
+
 // Routes (Ajout de plus de routes plus tard)
 app.get('/', (req, res) => {
     res.send('Bienvenue sur FoodParadise!');
