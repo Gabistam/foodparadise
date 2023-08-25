@@ -1,24 +1,27 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+// models/menu.js
+const { Model, DataTypes } = require('sequelize');
 
-const Menu = sequelize.define('Menu', {
-    ID_Menu: {
+class Menu extends Model {}
+
+Menu.init({
+    MenuID: {
         type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
-    Nom_Plat: {
+    DishName: {
         type: DataTypes.STRING,
         allowNull: false
     },
     Description: {
-        type: DataTypes.TEXT,
+        type: DataTypes.TEXT
     },
-    Prix: {
+    Price: {
         type: DataTypes.DECIMAL(8, 2),
         allowNull: false
     }
 }, {
+    sequelize,
     tableName: 'Menu',
     timestamps: false
 });

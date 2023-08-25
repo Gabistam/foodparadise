@@ -1,16 +1,28 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+// models/reservationMenu.js
 
-const ReservationMenu = sequelize.define('ReservationMenu', {
-    ID_Reservation: {
+const { Model, DataTypes } = require('sequelize');
+
+class ReservationMenu extends Model {}
+
+ReservationMenu.init({
+    ReservationID: {
         type: DataTypes.INTEGER,
+        references: {
+            model: 'Reservations',
+            key: 'ReservationID'
+        },
         primaryKey: true
     },
-    ID_Menu: {
+    MenuID: {
         type: DataTypes.INTEGER,
+        references: {
+            model: 'Menus',
+            key: 'MenuID'
+        },
         primaryKey: true
     }
 }, {
+    sequelize,
     tableName: 'ReservationMenu',
     timestamps: false
 });

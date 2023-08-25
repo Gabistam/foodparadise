@@ -1,16 +1,16 @@
 const express = require('express');
 const sequelize = require('./config/database');
 
-const Client = require('./models/Client');
-const TableResto = require('./models/TableResto');
+const User = require('./models/User');
+const RestaurantTable = require('./models/RestaurantTable');
 const Reservation = require('./models/Reservation');
 const Menu = require('./models/Menu');
 const ReservationMenu = require('./models/ReservationMenu');
-// Import des routes pour Client, Menu, Reservation, TableResto, ReservationMenu
-const clientRoutes = require('./routes/clients'); 
+// Import des routes pour User, Menu, Reservation, RestaurantTable, ReservationMenu
+const userRoutes = require('./routes/users'); 
 const menuRoutes = require('./routes/menus');
 const reservationRoutes = require('./routes/reservations');
-const tableRestoRoutes = require('./routes/tableRestos');
+const restaurantTablesRoutes = require('./routes/restaurantTables');
 const reservationMenuRoutes = require('./routes/reservationMenus');
 
 const app = express();
@@ -27,11 +27,11 @@ app.set('views', __dirname + '/views');
 app.get('/', (req, res) => {
     res.send('Bienvenue sur votre API de réservation pour restaurant!');
 });
-// Utilisation des routes pour Client, Menu, Reservation, TableResto, ReservationMenu
-app.use('/clients', clientRoutes); 
+// Utilisation des routes pour User, Menu, Reservation, restaurantTables, ReservationMenu
+app.use('/users', userRoutes); 
 app.use('/menus', menuRoutes); 
 app.use('/reservations', reservationRoutes);
-app.use('/tableRestos', tableRestoRoutes);
+app.use('/restaurantTables', restaurantTableRoutes);
 app.use('/reservationMenus', reservationMenuRoutes);
 
 

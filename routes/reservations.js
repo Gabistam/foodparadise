@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Reservation = require('../models/Reservation'); // Import du modèle Reservation
+const Reservation = require('../models/Reservation');  // Ajustez le chemin si nécessaire
 
 // Récupérer toutes les réservations
 router.get('/', async (req, res) => {
     try {
         const reservations = await Reservation.findAll();
         res.json(reservations);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 });
 
@@ -19,53 +19,50 @@ router.get('/:id', async (req, res) => {
         if (reservation) {
             res.json(reservation);
         } else {
-            res.status(404).json({ error: 'Réservation non trouvée' });
+            res.status(404).json({ message: 'Réservation non trouvée' });
         }
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 });
 
 // Créer une nouvelle réservation
 router.post('/', async (req, res) => {
     try {
-        const reservation = await Reservation.create(req.body);
-        res.status(201).json(reservation);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+        const newReservation = await Reservation.create(req.body);
+        res.status(201).json(newReservation);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
     }
 });
 
-// Mettre à jour une réservation par ID
+// Mettre à jour une réservation
 router.put('/:id', async (req, res) => {
     try {
-        const [updated] = await Reservation.update(req.body, {
-            where: { ID_Reservation: req.params.id }
-        });
-        if (updated) {
-            const updatedReservation = await Reservation.findByPk(req.params.id);
-            res.status(200).json(updatedReservation);
+        const reservation = await Reservation.findByPk(req.params.id);
+        if (reservation) {
+            await reservation.update(req.body);
+            res.json({ message: 'Réservation mise à jour' });
         } else {
-            res.status(404).json({ error: 'Réservation non trouvée' });
+            res.status(404).json({ message: 'Réservation non trouvée' });
         }
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
     }
 });
 
-// Supprimer une réservation par ID
+// Supprimer une réservation
 router.delete('/:id', async (req, res) => {
     try {
-        const deleted = await Reservation.destroy({
-            where: { ID_Reservation: req.params.id }
-        });
-        if (deleted) {
-            res.status(204).send("Réservation supprimée");
+        const reservation = await Reservation.findByPk(req.params.id);
+        if (reservation) {
+            await reservation.destroy();
+            res.json({ message: 'Réservation supprimée' });
         } else {
-            res.status(404).json({ error: 'Réservation non trouvée' });
+            res.status(404).json({ message: 'Réservation non trouvée' });
         }
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 });
 

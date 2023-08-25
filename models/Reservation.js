@@ -1,29 +1,46 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+// models/reservation.js
+const { Model, DataTypes } = require('sequelize');
 
-const Reservation = sequelize.define('Reservation', {
-    ID_Reservation: {
+class Reservation extends Model {}
+
+Reservation.init({
+    ReservationID: {
         type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
-    Date: {
+    UserID: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'Users',
+            key: 'UserID'
+        }
+    },
+    TableID: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'RestaurantTables',
+            key: 'TableID'
+        }
+    },
+    ReservationDate: {
         type: DataTypes.DATEONLY,
         allowNull: false
     },
-    Heure: {
+    ReservationTime: {
         type: DataTypes.TIME,
         allowNull: false
     },
-    Nombre_Personnes: {
+    NumberOfPeople: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    Statut: {
-        type: DataTypes.STRING,
+    Status: {
+        type: DataTypes.ENUM('pending', 'confirmed', 'cancelled'),
         allowNull: false
     }
 }, {
+    sequelize,
     tableName: 'Reservation',
     timestamps: true
 });

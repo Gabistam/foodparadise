@@ -1,0 +1,39 @@
+-------------- MPD  -------------------
+
+CREATE TABLE Users (
+    UserID SERIAL PRIMARY KEY,
+    FirstName VARCHAR(255) NOT NULL,
+    LastName VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) UNIQUE NOT NULL,
+    PhoneNumber VARCHAR(15) UNIQUE
+);
+
+CREATE TABLE RestaurantTable (
+    TableID SERIAL PRIMARY KEY,
+    TableNumber INT NOT NULL,
+    Capacity INT NOT NULL CHECK (Capacity > 0),
+    LocationDescription VARCHAR(255)
+);
+
+CREATE TABLE Reservation (
+    ReservationID SERIAL PRIMARY KEY,
+    UserID INT REFERENCES Users(UserID),
+    TableID INT REFERENCES RestaurantTable(TableID),
+    ReservationDate DATE NOT NULL,
+    ReservationTime TIME NOT NULL,
+    NumberOfPeople INT NOT NULL CHECK (NumberOfPeople > 0),
+    Status VARCHAR(255) CHECK (Status IN ('pending', 'confirmed', 'cancelled'))
+);
+
+CREATE TABLE Menu (
+    MenuID SERIAL PRIMARY KEY,
+    DishName VARCHAR(255) NOT NULL,
+    Description TEXT,
+    Price DECIMAL(8,2) NOT NULL CHECK (Price >= 0)
+);
+
+CREATE TABLE ReservationMenu (
+    ReservationID INT REFERENCES Reservation(ReservationID),
+    MenuID INT REFERENCES Menu(MenuID),
+    PRIMARY KEY (ReservationID, MenuID)
+);
