@@ -1,17 +1,20 @@
 const express = require('express');
 const sequelize = require('./config/database');
+const path = require('path');
 
 const User = require('./models/User');
 const RestaurantTable = require('./models/RestaurantTable');
 const Reservation = require('./models/Reservation');
 const Menu = require('./models/Menu');
 const ReservationMenu = require('./models/ReservationMenu');
-// Import des routes pour User, Menu, Reservation, RestaurantTable, ReservationMenu
+
+// Import des routes 
 const userRoutes = require('./routes/users'); 
 const menuRoutes = require('./routes/menus');
 const reservationRoutes = require('./routes/reservations');
 const restaurantTableRoutes = require('./routes/restaurantTables');
 const reservationMenuRoutes = require('./routes/reservationMenus');
+const homeRoutes = require('./routes/home');
 
 const app = express();
 
@@ -23,16 +26,22 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'twig');
 app.set('views', __dirname + '/views');
 
-// Routes
-app.get('/', (req, res) => {
-    res.send('Bienvenue sur votre API de réservation pour restaurant!');
-});
+// Route de test
+// app.get('/', (req, res) => {
+//     res.send('Bienvenue sur votre API de réservation pour restaurant!');
+// });
+
 // Utilisation des routes pour User, Menu, Reservation, restaurantTables, ReservationMenu
 app.use('/users', userRoutes); 
 app.use('/menus', menuRoutes); 
 app.use('/reservations', reservationRoutes);
 app.use('/restaurantTables', restaurantTableRoutes);
 app.use('/reservationMenus', reservationMenuRoutes);
+app.use('/', homeRoutes);
+
+//Middleware pour servir les fichiers statiques
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 
