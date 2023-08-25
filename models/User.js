@@ -23,14 +23,23 @@ User.init({
         allowNull: false,
         unique: true
     },
+    Password: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     PhoneNumber: {
         type: DataTypes.STRING,
         unique: true
+    },
+    Role: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 }, {
     sequelize,
-    tableName: 'Users',
-    timestamps: true
+    tableName: 'User',
+    timestamps: true,
 });
 
 module.exports = User;

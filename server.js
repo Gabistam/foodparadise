@@ -1,6 +1,10 @@
 const express = require('express');
 const sequelize = require('./config/database');
 const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
+const authRoutes = require('./routes/authRoutes');
+
 
 const User = require('./models/User');
 const RestaurantTable = require('./models/RestaurantTable');
@@ -16,7 +20,27 @@ const restaurantTableRoutes = require('./routes/restaurantTables');
 const reservationMenuRoutes = require('./routes/reservationMenus');
 const homeRoutes = require('./routes/home');
 
+// Importation des middlewares
+const authMiddleware = require('./middlewares/authMiddleware');
+const authorizationMiddleware = (req, res, next) => {
+    if (!req.userId) {
+        return res.status(403).json({ error: 'Access denied' });
+    }
+    User.findByPk(req.userId).then(user => {
+        if (user && user.Role) {
+            return next();
+        } else {
+            return res.status(403).json({ error: 'Access denied' });
+        }
+    }).catch(err => {
+        return res.status(500).json({ error: 'Internal server error' });
+    });
+};
+
 const app = express();
+
+// Authentification
+app.use('/auth', authRoutes);
 
 // Utilisation des middlewares intégrés d'Express pour le traitement du corps des requêtes
 app.use(express.json());
@@ -32,11 +56,11 @@ app.set('views', __dirname + '/views');
 // });
 
 // Utilisation des routes pour User, Menu, Reservation, restaurantTables, ReservationMenu
-app.use('/users', userRoutes); 
-app.use('/menus', menuRoutes); 
-app.use('/reservations', reservationRoutes);
-app.use('/restaurantTables', restaurantTableRoutes);
-app.use('/reservationMenus', reservationMenuRoutes);
+app.use('/users', authMiddleware, userRoutes); 
+app.use('/menus', authMiddleware, menuRoutes); 
+app.use('/reservations', authMiddleware, reservationRoutes);
+app.use('/restaurantTables', authMiddleware, restaurantTableRoutes);
+app.use('/reservationMenus', authMiddleware, reservationMenuRoutes);
 app.use('/', homeRoutes);
 
 //Middleware pour servir les fichiers statiques

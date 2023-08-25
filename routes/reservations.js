@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Reservation = require('../models/Reservation');  // Ajustez le chemin si nécessaire
+//ajout middleware auth
+// const authMiddleware = require('../middlewares/authMiddleware');
+
 
 // Récupérer toutes les réservations
 router.get('/', async (req, res) => {
