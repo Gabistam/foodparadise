@@ -1,5 +1,6 @@
 // models/restaurantTable.js
 const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
 class RestaurantTable extends Model {}
 

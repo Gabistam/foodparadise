@@ -10,7 +10,7 @@ const ReservationMenu = require('./models/ReservationMenu');
 const userRoutes = require('./routes/users'); 
 const menuRoutes = require('./routes/menus');
 const reservationRoutes = require('./routes/reservations');
-const restaurantTablesRoutes = require('./routes/restaurantTables');
+const restaurantTableRoutes = require('./routes/restaurantTables');
 const reservationMenuRoutes = require('./routes/reservationMenus');
 
 const app = express();

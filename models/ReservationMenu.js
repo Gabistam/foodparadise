@@ -1,6 +1,7 @@
 // models/reservationMenu.js
 
 const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
 class ReservationMenu extends Model {}
 
